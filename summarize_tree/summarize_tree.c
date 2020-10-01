@@ -53,23 +53,19 @@ void process_directory(const char* path) {
    */
 	 
 	  chdir(path);
-	  struct dirent *dp; 
-	  DIR *dirp = opendir("."); 
-
-	  if(!dirp){
-		return;
-	  }
+	  struct dirent *dn; 
+	  DIR *dp = opendir("."); 
 		 
 	  num_dirs++; 
 
-	  while((dp = readdir(dirp)) != NULL){ 
+	  while((dn = readdir(dp)) != NULL){ 
 			         
-	      if(strcmp(dp->d_name,"." ) != 0 && strcmp(dp->d_name, ".." ) != 0){
-		  	  process_path(dp->d_name);
+	      if(strcmp(dn->d_name,"." ) != 0 && strcmp(dn->d_name, ".." ) != 0){
+		  	  process_path(dn->d_name);
 	      }
 	  }
 		     
-          closedir(dirp);
+          closedir(dp);
 	  chdir(".."); 
 
 }
