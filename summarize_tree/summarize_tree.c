@@ -16,20 +16,19 @@ bool is_dir(const char* path) {
    * return value from stat in case there is a problem, e.g., maybe the
    * the file doesn't actually exist.
    */
-
-	struct stat *statBuff;
-	statBuff = malloc(sizeof(struct stat));
+  struct stat *statBuff;
+  statBuff = malloc(sizeof(struct stat));
 	    
-	if (stat(path, statBuff) !=0){ 	    	
-		return false;
-       	}
-	if(S_ISDIR(statBuff->st_mode)){ 
-		free(statBuff);
-		return true;
-	}else{
-		free(statBuff); 	  
-	        return false;
-       	}
+  if (stat(path, statBuff) !=0){ 	    	
+    return false;
+  }  
+  if(S_ISDIR(statBuff->st_mode)){ 
+    free(statBuff);
+    return true;
+    }else{
+      free(statBuff); 	  
+      return false;
+    }
 }
 
 /* 
@@ -49,23 +48,20 @@ void process_directory(const char* path) {
    * You'll also want to use chdir() to move into this new directory,
    * with a matching call to chdir() to move back out of it when you're
    * done.
-   */
-	 
-	chdir(path);
-	struct dirent *dn; 
-	DIR *dp = opendir("."); 
-		 
-	num_dirs++; 
+   */	 
+  chdir(path);
+  struct dirent *dn; 
+  DIR *dp = opendir("."); 	 
 
-	while((dn = readdir(dp)) != NULL){ 
-			         
-		if(strcmp(dn->d_name,"." ) != 0 && strcmp(dn->d_name, ".." ) != 0){
-			process_path(dn->d_name);
-	      	}
-	}
-		     
-        closedir(dp);
-	chdir(".."); 
+  while((dn = readdir(dp)) != NULL){ 			         
+    if(strcmp(dn->d_name,"." ) != 0 && strcmp(dn->d_name, ".." ) != 0){
+      process_path(dn->d_name);
+    }
+  }
+
+  num_dirs++;	     
+  closedir(dp);
+  chdir(".."); 
 
 }
 void process_file(const char* path) {
