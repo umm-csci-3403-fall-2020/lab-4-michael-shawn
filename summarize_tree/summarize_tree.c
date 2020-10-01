@@ -20,9 +20,8 @@ bool is_dir(const char* path) {
 	struct stat *statBuff;
 	statBuff = malloc(sizeof(struct stat));
 	    
-	if (stat(path, statBuff) !=0){ 
-		    	
-		    return false;
+	if (stat(path, statBuff) !=0){ 	    	
+		return false;
        	}
 	if(S_ISDIR(statBuff->st_mode)){ 
 		free(statBuff);
@@ -52,21 +51,21 @@ void process_directory(const char* path) {
    * done.
    */
 	 
-	  chdir(path);
-	  struct dirent *dn; 
-	  DIR *dp = opendir("."); 
+	chdir(path);
+	struct dirent *dn; 
+	DIR *dp = opendir("."); 
 		 
-	  num_dirs++; 
+	num_dirs++; 
 
-	  while((dn = readdir(dp)) != NULL){ 
+	while((dn = readdir(dp)) != NULL){ 
 			         
-	      if(strcmp(dn->d_name,"." ) != 0 && strcmp(dn->d_name, ".." ) != 0){
-		  	  process_path(dn->d_name);
-	      }
-	  }
+		if(strcmp(dn->d_name,"." ) != 0 && strcmp(dn->d_name, ".." ) != 0){
+			process_path(dn->d_name);
+	      	}
+	}
 		     
-          closedir(dp);
-	  chdir(".."); 
+        closedir(dp);
+	chdir(".."); 
 
 }
 void process_file(const char* path) {
