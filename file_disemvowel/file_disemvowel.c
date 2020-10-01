@@ -1,9 +1,10 @@
 #include <stdio.h>
-#include <stbool.h>
+#include <stdbool.h>
 
 #define BUF_SIZE 1024
 
 bool is_vowel(char c) {
+  bool isCharVowel;
   switch(c) {
     case 'a':
     case 'e':
@@ -16,10 +17,10 @@ bool is_vowel(char c) {
     case 'O':
     case 'U':
 
-        bool isVowel = true;
+        isCharVowel = true;
 
     default:
-	bool isVowel = false;
+        isCharVowel = false;
   }
-  return isVowel;
+  return isCharVowel;
 }
