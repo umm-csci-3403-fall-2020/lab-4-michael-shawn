@@ -25,6 +25,21 @@ bool is_vowel(char c) {
   return isCharVowel;
 }
 
+void disemvowel(FILE* inputFile, FILE* outputFile) {
+  char* in_buffer = (char*)calloc(BUF_SIZE, sizeof(char));
+  char* out_buffer = (char*)calloc(BUF_SIZE, sizeof(char));
+    
+    int num_chars = 1;
+    int non_vowels;
+    while(num_chars != 0) {
+      num_chars = fread(in_buffer, sizeof(char), BUF_SIZE, inputFile);
+      non_vowels = copy_non_vowels(num_chars, in_buffer, out_buffer);
+      fwrite(out_buffer, sizeof(char), non_vowels, outputFile);
+    }
+    free(in_buffer);
+    free(out_buffer);
+}
+
 int main(int argc, char *argv[]) {
   FILE *inputFile;
   FILE *outputFile;
