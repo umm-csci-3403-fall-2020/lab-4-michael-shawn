@@ -25,6 +25,18 @@ bool is_vowel(char c) {
   return isCharVowel;
 }
 
+int copy_non_vowels(int num_chars, char* in_buffer, char* out_buffer) {
+  int i;
+  
+  for (i=0; i < num_chars; i++) {
+    if (is_vowel(in_buffer[i]) == false) {
+      out_buffer[i] = in_buffer[i];
+    }
+  }
+  return num_chars;
+}
+
+
 void disemvowel(FILE* inputFile, FILE* outputFile) {
   char* in_buffer = (char*)calloc(BUF_SIZE, sizeof(char));
   char* out_buffer = (char*)calloc(BUF_SIZE, sizeof(char));
@@ -41,28 +53,29 @@ void disemvowel(FILE* inputFile, FILE* outputFile) {
 }
 
 int main(int argc, char *argv[]) {
-  FILE *inputFile;
-  FILE *outputFile;
+  FILE *inputFile = stdin;
+  FILE *outputFile = stdout;
   
-  if(argc == 1){
-    inputFile = stdin;
-    outputFile = stdout; 
-  }
-  else if( argc == 2 ){
+ 
+  if( argc >= 2 ){
     inputFile = fopen(argv[1], "r");
-    outputFile = stdout;
+    if (inputFile == NULL) {
+      perror("fopen()");
+      exit(1);
+    }
   }
-  else if(argc == 3){
-    inputFile = fopen(argv[1], "r"); 	
+  if(argc == 3){ 	
     outputFile = fopen(argv[2], "w");
-  }
-  // exit if too many command line arguments are given
-  else{
-    printf("too many arguements give given.");
-    exit(0);
+    if (outputFile == NULL) {
+      perror("fopen()");
+      exit(1);
+    }
   }
 
 disemvowel(inputFile, outputFile);
+
+fclose(inputFile);
+fclose(outputFile);
 return 0;
 }   
 
