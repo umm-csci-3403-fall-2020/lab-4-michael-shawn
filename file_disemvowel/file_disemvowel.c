@@ -30,7 +30,7 @@ bool is_vowel(char c) {
 int copy_non_vowels(int num_chars, char* in_buffer, char* out_buffer) {
   int i;
   int num_vowels = 0;
-  for (i=0; i < num_chars; i++) {
+  for (i=0; i < num_chars-2; i++) {
     if (is_vowel(in_buffer[i]) == false) {
       out_buffer[num_vowels] = in_buffer[i];
       num_vowels++;
