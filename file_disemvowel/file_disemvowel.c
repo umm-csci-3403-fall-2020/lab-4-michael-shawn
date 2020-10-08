@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+
 #define BUF_SIZE 1024
 
 bool is_vowel(char c) {
@@ -18,24 +19,25 @@ bool is_vowel(char c) {
     case 'U':
 
         isCharVowel = true;
-
+        return isCharVowel;
     default:
         isCharVowel = false;
+	return isCharVowel;
   }
   return isCharVowel;
 }
 
 int copy_non_vowels(int num_chars, char* in_buffer, char* out_buffer) {
   int i;
-  
+  int num_vowels = 0;
   for (i=0; i < num_chars; i++) {
     if (is_vowel(in_buffer[i]) == false) {
-      out_buffer[i] = in_buffer[i];
+      out_buffer[num_vowels] = in_buffer[i];
+      num_vowels++;
     }
   }
-  return num_chars;
+  return num_vowels;
 }
-
 
 void disemvowel(FILE* inputFile, FILE* outputFile) {
   char* in_buffer = (char*)calloc(BUF_SIZE, sizeof(char));
@@ -55,8 +57,7 @@ void disemvowel(FILE* inputFile, FILE* outputFile) {
 int main(int argc, char *argv[]) {
   FILE *inputFile = stdin;
   FILE *outputFile = stdout;
-  
- 
+   
   if( argc >= 2 ){
     inputFile = fopen(argv[1], "r");
     if (inputFile == NULL) {
@@ -64,6 +65,7 @@ int main(int argc, char *argv[]) {
       exit(1);
     }
   }
+
   if(argc == 3){ 	
     outputFile = fopen(argv[2], "w");
     if (outputFile == NULL) {
